@@ -21,11 +21,13 @@ export default async function handler(req, res) {
 
     const data = await wpResponse.json();
 
-    if (!wpResponse.ok) {
-      return res.status(wpResponse.status).json({ error: data });
-    }
+    // 💬 Zusätzliche Debug-Ausgabe
+    return res.status(wpResponse.status).json({
+      forwardedToWordPress: true,
+      wpStatus: wpResponse.status,
+      wpResponse: data
+    });
 
-    return res.status(200).json({ success: true, post: data });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
